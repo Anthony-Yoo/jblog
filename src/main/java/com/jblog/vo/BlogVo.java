@@ -3,13 +3,13 @@ package com.jblog.vo;
 public class BlogVo {
 	
 	private String id;
-	private String blogtitle;
-	private String logofile;
+	private String blogTitle;
+	private String logoFile;
 	
-	public BlogVo(String id, String blogtitle, String logofile) {
+	public BlogVo(String id, String blogTitle, String logoFile) {
 		this.id = id;
-		this.blogtitle = blogtitle;
-		this.logofile = logofile;
+		this.blogTitle = blogTitle;
+		this.logoFile = logoFile;
 	}
 
 	public BlogVo() {
@@ -23,26 +23,28 @@ public class BlogVo {
 		this.id = id;
 	}
 
-	public String getBlogtitle() {
-		return blogtitle;
+	public String getBlogTitle() {
+		return blogTitle;
 	}
 
-	public void setBlogtitle(String blogtitle) {
-		this.blogtitle = blogtitle;
+	public void setBlogTitle(String blogTitle) {
+		this.blogTitle = blogTitle;
 	}
 
-	public String getLogofile() {
-		return logofile;
+	public String getLogoFile() {
+		return logoFile;
 	}
 
-	public void setLogofile(String logofile) {
-		this.logofile = logofile;
+	public void setLogoFile(String logoFile) {
+		this.logoFile = logoFile;
 	}
 
 	@Override
 	public String toString() {
-		return "BlogVo [id=" + id + ", blogtitle=" + blogtitle + ", logofile=" + logofile + "]";
+		return "BlogVo [id=" + id + ", blogTitle=" + blogTitle + ", logoFile=" + logoFile + "]";
 	}
+	
+	
 	
 	
 }

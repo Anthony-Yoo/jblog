@@ -22,10 +22,5 @@ public class UserDao {
 		System.out.println("UserDao.selectId()");
 		
 		return session.selectOne("jblogUser.selectId", id);		
-	}
-	public UserVo selectUser(UserVo userVo) {
-		System.out.println("Dao.selectUser()");		
-		
-		return session.selectOne("jblogUser.selectUser",userVo);		
-	}
+	}	
 }

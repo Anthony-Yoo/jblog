@@ -28,20 +28,6 @@
 				from users
 				where id = #{id}
 		]]>	
-	</select>
-	<select id="selectUser" parameterType="com.jblog.vo.UserVo" resultType="com.jblog.vo.UserVo">
-		<![CDATA[
-			select 	bulletin.no,
-					users.name,
-					bulletin.hit,
-					bulletin.reg_date,
-					bulletin.title,
-					bulletin.content
-			from bulletin
-			join users 
-			on users.no = bulletin.user_no
-			where bulletin.no = #{no}	
-		]]>		
-	</select>
+	</select>	
 
 </mapper>

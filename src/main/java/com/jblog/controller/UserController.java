@@ -35,10 +35,8 @@ public class UserController {
 	public String join(@ModelAttribute UserVo userVo) {
 		System.out.println("UserController.join()");
 		
-		userService.join(userVo);
-		String id = userVo.getId();
-		
-		blogService.create(id);
+		userService.join(userVo);		
+		blogService.create(userVo);
 		
 		return "user/joinSuccess";		
 	}
@@ -59,10 +57,8 @@ public class UserController {
 			result = false;
 		}	
 		
-		JsonResult jsonResult = new JsonResult();
-		
-		jsonResult.success(result);			
-		
+		JsonResult jsonResult = new JsonResult();		
+		jsonResult.success(result);		
 		System.out.println(jsonResult);
 		
 		return jsonResult;
@@ -78,20 +74,38 @@ public class UserController {
 	
 	//로그인
 	@RequestMapping("/login")
-	public String login(@ModelAttribute UserVo uservo,HttpSession session) {
+	public String login(@ModelAttribute UserVo userVo,HttpSession session) {
 		System.out.println("UserController.login()");
 		
-		UserVo successUser = userService.login(uservo);
-		/*
-		 * System.out.println(successUser);
-		 * 
-		 * if (successUser != null) { System.out.println("로그인성공");
-		 * session.setAttribute("successUser", successUser);
-		 * 
-		 * return "/index"; }else { System.out.println("로그인실패"); return
-		 * "redirect:/user/loginForm?result=fail"; }
-		 */
-		return "";
+		UserVo orgUser = userService.login(userVo);		
+		System.out.println(orgUser);
+		
+		UserVo autherUser = new UserVo();		
+		  
+		if (orgUser != null) {		
+		System.out.println("로그인성공");
+		
+		autherUser.setUserNo(orgUser.getUserNo());
+		autherUser.setUserName(orgUser.getUserName());
+		autherUser.setId(orgUser.getId());
+		session.setAttribute("autherUser", autherUser);
+		  
+		return "main/index";
+		
+		} else { 
+		System.out.println("로그인실패");
+		
+		return "redirect:/user/loginForm?result=fail";		
+		}	
+	}
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		System.out.println("UserController.logout()");
+		
+		session.removeAttribute("autherUser");
+		session.invalidate();
+		
+		return "redirect:/";
 	}
 	
 }

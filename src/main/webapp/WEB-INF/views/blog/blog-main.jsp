@@ -27,7 +27,7 @@
 					<!-- 사용자업로드 이미지 -->
 					<%-- <img id="proImg" src=""> --%>
 					
-					<div id="nick">정우성(hijava)님</div>
+					<div id="nick">>${blogUser.userName}(${blogUser.id})님</div>
 				</div>
 				<div id="cate">
 					<div class="text-left">
@@ -51,7 +51,7 @@
 				<div id="postBox" class="clearfix">
 						<div id="postTitle" class="text-left"><strong>08.페이징</strong></div>
 						<div id="postDate" class="text-left"><strong>2020/07/23</strong></div>
-						<div id="postNick">정우성(hijava)님</div>
+						<div id="postNick">${blogUser.userName}(${blogUser.id})님</div>
 				</div>
 				<!-- //postBox -->
 			

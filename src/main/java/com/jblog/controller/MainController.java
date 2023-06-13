@@ -29,13 +29,12 @@ public class MainController {
 	}
 	
 	@RequestMapping("/{id}")
-	public String blogmain(@PathVariable("id") String id, Model model) {
-		System.out.println("MainController.blogmain()");		
+	public String blogMain(@PathVariable("id") String id, Model model) {
+		System.out.println("MainController.blogMain()");		
 
 		UserVo userVo = userService.idcheck(id);
-		String userName = userVo.getUserName();
-		
-		
+		//String userName = userVo.getUserName();	
+		model.addAttribute("blogUser", userVo);
 		
 		return "blog/blog-main";
 	}

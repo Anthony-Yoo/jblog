@@ -12,13 +12,16 @@ public class BlogDao {
 	@Autowired
 	private SqlSession session;
 	
-	public int insertId(String id) {
+	public int insertId(BlogVo blogVo) {
 		System.out.println("BlogDao.insertId()");
 		
-		return session.insert("jblogBlog.insertId", id);
-				
-		
+		return session.insert("jblogBlog.insertVo", blogVo);		
 	}
 	
+	public BlogVo selectId(String id) {
+		System.out.println("BlogDao.selectId()");
+		
+		return session.selectOne("jblogBlog.selectId", id);	
+	}
 
 }

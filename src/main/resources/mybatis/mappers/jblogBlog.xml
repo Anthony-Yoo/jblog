@@ -3,14 +3,24 @@
 
 <mapper namespace="jblogBlog">
 
-	<insert id="insert" parameterType="com.jblog.vo.UserVo">
+	<insert id="insertVo" parameterType="com.jblog.vo.BlogVo">
 		<![CDATA[
 			insert into blog 
 			values (
 			#{id},
-			#{userName} + "의 블로그입니다",
-			#{logoFile},			
+			#{blogTitle},
+			#{logoFile}		
 			)		
 		]]>
 	</insert>
+	<select id="selectId" parameterType="String" resultType="com.jblog.vo.BlogVo">
+		<![CDATA[
+				select id,
+					   blogTitle,				   
+					   logoFile
+				from blog
+				where id = #{id}
+		]]>	
+	</select>
+	
 </mapper>
