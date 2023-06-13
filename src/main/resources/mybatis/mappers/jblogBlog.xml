@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jblogBlog">
+
+	<insert id="insert" parameterType="com.jblog.vo.UserVo">
+		<![CDATA[
+			insert into blog 
+			values (
+			#{id},
+			#{userName} + "의 블로그입니다",
+			#{logoFile},			
+			)		
+		]]>
+	</insert>
+</mapper>
