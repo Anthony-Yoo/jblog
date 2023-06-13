@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.jblog.service.BlogService;
 import com.jblog.vo.BlogVo;
-
+ 
 
 @Controller
 public class AdminController {	
