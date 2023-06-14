@@ -6,7 +6,8 @@
     </typeAliases>
 
     <mappers>
-        <mapper resource="mybatis/mappers/jblogUser.xml" />
-        <mapper resource="mybatis/mappers/jblogBlog.xml" />
+        <mapper resource="mybatis/mappers/User.xml" />
+        <mapper resource="mybatis/mappers/Blog.xml" />
+        <mapper resource="mybatis/mappers/Admin.xml" />
     </mappers>
 </configuration>

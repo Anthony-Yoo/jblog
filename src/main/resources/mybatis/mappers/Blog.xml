@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="jblogBlog">
+<mapper namespace="Blog">
 
 	<insert id="insertVo" parameterType="com.jblog.vo.BlogVo">
 		<![CDATA[
@@ -15,11 +15,14 @@
 	</insert>
 	<select id="selectId" parameterType="String" resultType="com.jblog.vo.BlogVo">
 		<![CDATA[
-				select id,
-					   blogTitle,				   
-					   logoFile
-				from blog
-				where id = #{id}
+				select b.id,
+					   b.blogTitle,				   
+					   b.logoFile,
+					   u.userName
+				from blog b
+				join users u
+				on b.id = u.id				
+				where b.id = #{id}
 		]]>	
 	</select>
 	

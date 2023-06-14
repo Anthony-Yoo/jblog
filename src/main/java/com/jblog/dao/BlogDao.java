@@ -15,13 +15,13 @@ public class BlogDao {
 	public int insertId(BlogVo blogVo) {
 		System.out.println("BlogDao.insertId()");
 		
-		return session.insert("jblogBlog.insertVo", blogVo);		
+		return session.insert("Blog.insertVo", blogVo);		
 	}
 	
 	public BlogVo selectId(String id) {
 		System.out.println("BlogDao.selectId()");
 		
-		return session.selectOne("jblogBlog.selectId", id);	
+		return session.selectOne("Blog.selectId", id);	
 	}
 
 }

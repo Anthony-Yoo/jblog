@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 
 <!DOCTYPE html>
 <html>
@@ -7,21 +8,21 @@
 <meta charset="UTF-8">
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js"></script>
 
 </head>
 
 <body>
 	<div id="wrap">
-		
+		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 		<!-- 개인블로그 해더 -->
 
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -44,30 +45,23 @@
 			      			<th>삭제</th>      			
 			      		</tr>
 		      		</thead>
+		      		<c:forEach items="${cateList}" var="cateVo">
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
 		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
+							<td>${cateVo.cateNo}</td>
+							<td>${cateVo.cateName}</td>
+							<td>${cateVo.postNum}</td>
+							<td>${cateVo.description}</td>
 						    <td class='text-center'>
 						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
 						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
+						</tr>						
 						<!-- 리스트 영역 -->
 					</tbody>
+					</c:forEach>
 				</table>
-      	
+      			<%-- <form id="categoryForm" method="post" action="${pageContext.request.contextPath}/user/join"> --%>
 		      	<table id="admin-cate-add" >
 		      		<colgroup>
 						<col style="width: 100px;">
@@ -86,6 +80,7 @@
 				<div id="btnArea">
 		      		<button id="btnAddCate" class="btn_l" type="submit" >카테고리추가</button>
 		      	</div>
+		    <!--</form> -->
 			
 			</div>
 			<!-- //admin-content -->
@@ -100,8 +95,51 @@
 	</div>
 	<!-- //wrap -->
 </body>
+<script type="text/javascript">
+$('#btnAddCate').on("click",function(){
+	console.log("카테고리추가 버튼 클릭");
+	
+	var cateName = $("[name='name']").val();
+	var description = $("[name='desc']").val();
+	
+	console.log(cateName,description);
+	
+	var categoryVo = {
+			cateName : cateName,
+			description : description
+	};
+	console.log(categoryVo);
+	
 
+	$.ajax({			
+		url : "${pageContext.request.contextPath}/category/insert",		
+		type : "post",
+		/* contentType : "application/json"*/
+		data : categoryVo,
 
+		dataType : "json",
+		success : function(jsonResult){
+			var id = "t-"+guestVo.no;
+			
+			console.log(jsonResult);
+			/*성공시 처리해야될 코드 작성*/
+			
+			if(jsonResult.data>0) {//처리성공					
+				$("#"+id).remove();
+				$('#myModal').modal('hide');
+					
+			}else {//오류처리
+				alert("비밀번호가 틀렸습니다.")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}			
+	});
+	console.log("test입니다." + guestVo.no);	
+	
+	
+});
 
-
+</script>
 </html>

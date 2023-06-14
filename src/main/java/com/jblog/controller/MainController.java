@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.jblog.service.BlogService;
 import com.jblog.service.UserService;
+import com.jblog.vo.BlogVo;
 import com.jblog.vo.UserVo;
 
 @Controller
@@ -32,9 +33,9 @@ public class MainController {
 	public String blogMain(@PathVariable("id") String id, Model model) {
 		System.out.println("MainController.blogMain()");		
 
-		UserVo userVo = userService.idcheck(id);
-		//String userName = userVo.getUserName();	
-		model.addAttribute("blogUser", userVo);
+		BlogVo blogVo = blogService.idcheck(id);
+		System.out.println(blogVo);
+		model.addAttribute("blogVo", blogVo);
 		
 		return "blog/blog-main";
 	}

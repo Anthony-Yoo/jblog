@@ -29,11 +29,9 @@ public class UserService {
 	}
 	public UserVo login(UserVo userVo) {
 		System.out.println("Service.login()");
+					
 		
-		String userId = userVo.getId();				
-		
-		return userDao.selectId(userId);
-		
+		return userDao.selectUser(userVo);		
 	}
 	
 	

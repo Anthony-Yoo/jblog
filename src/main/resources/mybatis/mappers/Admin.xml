@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Admin">
+
+	<insert id="updateBlog" parameterType="com.jblog.vo.BlogVo">
+		<![CDATA[
+			update blog 
+			set 			
+			blogTitle = #{blogTitle},
+			logoFile = #{logoFile}	
+			where id = #{id}				
+		]]>
+	</insert>
+	
+	<select id="selectId" parameterType="String" resultType="com.jblog.vo.CategoryVo">
+		<![CDATA[
+			select  c.cateNo,
+					c.id,
+					c.cateName,
+					c.description,
+					c.regDate,
+					(select count(*) from post p where c.cateNo = p.cateNo) as postNum
+			from category c
+			where c.id = #{value}
+			order by c.cateNo DESC		
+		]]>
+	</select>
+	
+	<insert id="insertVo" parameterType="com.jblog.vo.CategoryVo">
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
+			select seq_category_no.nextval from dual		
+		</selectKey>
+		insert into 
+		category(	cateNo,
+					id,
+					cateName,
+					description,
+					regDate	)
+		values (	#{cateNo},
+					#{id},
+					#{cateName},
+					#{description},
+					sysdate	)	
+	</insert>
+	
+	
+</mapper>

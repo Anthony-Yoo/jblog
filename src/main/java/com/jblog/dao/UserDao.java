@@ -15,12 +15,19 @@ public class UserDao {
 	public int insertUser (UserVo userVo) {
 		System.out.println("UserDao.insertUser()");		
 		
-		return session.insert("jblogUser.insert", userVo);
+		return session.insert("User.insert", userVo);
 		
 	}
 	public UserVo selectId(String id) {
 		System.out.println("UserDao.selectId()");
 		
-		return session.selectOne("jblogUser.selectId", id);		
+		return session.selectOne("User.selectId", id);		
 	}	
+	public UserVo selectUser(UserVo userVo) {
+		System.out.println("UserDao.selectUser()");
+		
+		return session.selectOne("User.selectUser", userVo);
+		
+	}
+	
 }

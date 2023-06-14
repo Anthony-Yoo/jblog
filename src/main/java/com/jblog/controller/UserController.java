@@ -80,15 +80,15 @@ public class UserController {
 		UserVo orgUser = userService.login(userVo);		
 		System.out.println(orgUser);
 		
-		UserVo autherUser = new UserVo();		
+		UserVo authUser = new UserVo();		
 		  
 		if (orgUser != null) {		
 		System.out.println("로그인성공");
 		
-		autherUser.setUserNo(orgUser.getUserNo());
-		autherUser.setUserName(orgUser.getUserName());
-		autherUser.setId(orgUser.getId());
-		session.setAttribute("autherUser", autherUser);
+		authUser.setUserNo(orgUser.getUserNo());
+		authUser.setUserName(orgUser.getUserName());
+		authUser.setId(orgUser.getId());
+		session.setAttribute("authUser", authUser);
 		  
 		return "main/index";
 		
