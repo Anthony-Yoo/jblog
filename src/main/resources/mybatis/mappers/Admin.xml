@@ -22,7 +22,7 @@
 					c.regDate,
 					(select count(*) from post p where c.cateNo = p.cateNo) as postNum
 			from category c
-			where c.id = #{value}
+			where c.id = #{id}
 			order by c.cateNo DESC		
 		]]>
 	</select>
@@ -44,5 +44,23 @@
 					sysdate	)	
 	</insert>
 	
+	<select id="selectCno" parameterType="int" resultType="com.jblog.vo.CategoryVo">
+		<![CDATA[
+			select  c.cateNo,
+					c.id,
+					c.cateName,
+					c.description,
+					c.regDate,
+					(select count(*) from post p where c.cateNo = p.cateNo) as postNum
+			from category c
+			where c.cateNo = #{cateNo}
+		]]>
+	</select>
 	
+	<delete id="deleteVo" parameterType="int">
+		<![CDATA[
+			delete from category
+			where cateNo = #{cateNo}
+		]]>	
+	</delete>
 </mapper>

@@ -44,5 +44,10 @@ public class AdminDao {
 		return session.selectOne("Admin.selectCno", cateNo);
 	}
 	
+	public int deleteVo(int cateNo) {
+		System.out.println("AdminDao.deleteVo()");
+		
+		return session.delete("Admin.deleteVo",cateNo);
+	}
 	
 }

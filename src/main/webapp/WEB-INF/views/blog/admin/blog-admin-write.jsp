@@ -20,9 +20,9 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
-				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/writeForm">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -36,13 +36,15 @@
 						</colgroup>
 			      		<tr>
 			      			<td class="t">포스트 제목</td>
-			      			<td >
+			      			<td>
 			      				<input type="text" name="postTitle">
 				      		</td>
 				      		<td>
 				      			<select name="cateNo">
 				      				<!-- 카테고리 리스트 영역 -->
-				      				<option value="">자바프로그래밍</option>
+				      				<c:forEach items="${cateList}" var="cateVo">
+				      				<option value="${cateNo}">${cateVo.cateName}</option>
+				      				</c:forEach>
 				      				<!-- 카테고리 리스트 영역 -->
 				      			</select>
 				      		</td>

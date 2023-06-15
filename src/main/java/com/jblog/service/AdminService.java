@@ -75,9 +75,16 @@ public class AdminService {
 		
 		adminDao.insertVo(cateVo);
 		int cateNo = cateVo.getCateNo();
-		cateVo = adminDao.selectCno(cateNo);
+		System.out.println(cateNo);
+		CategoryVo resultCateVo = adminDao.selectCno(cateNo);
+		System.out.println(resultCateVo);
 		
-		return cateVo;
+		return resultCateVo;
 	}
-
+	
+	public int deleteColumn(int cateNo) {
+		System.out.println("AdminService.deleteColumn()");
+				
+		return adminDao.deleteVo(cateNo);
+	}
 }

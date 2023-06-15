@@ -17,7 +17,6 @@
 		<c:import url="/WEB-INF/views/includes/blog-header.jsp"></c:import>
 		<!-- 개인블로그 해더 -->
 
-
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${blogVo.id}/admin/basic">기본설정</a></li>
@@ -44,22 +43,22 @@
 			      			<th>설명</th>
 			      			<th>삭제</th>      			
 			      		</tr>
-		      		</thead>
-		      		<c:forEach items="${cateList}" var="cateVo">
-		      		<tbody id="cateList">
-		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>${cateVo.cateNo}</td>
-							<td>${cateVo.cateName}</td>
-							<td>${cateVo.postNum}</td>
-							<td>${cateVo.description}</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>						
-						<!-- 리스트 영역 -->
-					</tbody>
-					</c:forEach>
+		      		</thead>	
+			      		<c:forEach items="${cateList}" var="cateVo">
+				      		<tbody id="tBody${cateVo.cateNo}" class="cateList">
+				      			<!-- 리스트 영역 -->
+				      			<tr>
+									<td>${cateVo.cateNo}</td>
+									<td>${cateVo.cateName}</td>
+									<td id="tdPostNum">${cateVo.postNum}</td>
+									<td>${cateVo.description}</td>
+								    <td class='text-center'>
+								    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-no="${cateVo.cateNo}">
+								    </td>
+								</tr>						
+								<!-- 리스트 영역 -->
+							</tbody>
+						</c:forEach>
 				</table>
       			<%-- <form id="categoryForm" method="post" action="${pageContext.request.contextPath}/user/join"> --%>
 		      	<table id="admin-cate-add" >
@@ -96,17 +95,20 @@
 	<!-- //wrap -->
 </body>
 <script type="text/javascript">
+
 $('#btnAddCate').on("click",function(){
 	console.log("카테고리추가 버튼 클릭");
 	
 	var cateName = $("[name='name']").val();
 	var description = $("[name='desc']").val();
+	var id = "${blogVo.id}";
 	
-	console.log(cateName,description);
+	console.log(cateName,description,id);
 	
 	var categoryVo = {
 			cateName : cateName,
-			description : description
+			description : description,
+			id : id
 	};
 	console.log(categoryVo);
 	
@@ -119,27 +121,82 @@ $('#btnAddCate').on("click",function(){
 
 		dataType : "json",
 		success : function(jsonResult){
-			var id = "t-"+guestVo.no;
-			
 			console.log(jsonResult);
-			/*성공시 처리해야될 코드 작성*/
 			
-			if(jsonResult.data>0) {//처리성공					
-				$("#"+id).remove();
-				$('#myModal').modal('hide');
-					
+		if(jsonResult.result == 'success') {//처리성공					
+			render(jsonResult.data);
+			console.log("성공");
+						
+			$("[name='name']").val("");
+			$("[name='desc']").val("");			
+			
 			}else {//오류처리
-				alert("비밀번호가 틀렸습니다.")
+				var msg = jsonResult.failMsg;
+				alter(msg);				
 			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
-		}			
+		}				
 	});
-	console.log("test입니다." + guestVo.no);	
+	console.log("test입니다." + categoryVo.id);		
+});
+
+$("#admin-cate-list").on("click",".btnCateDel", function(){
+	console.log("삭제버튼 클릭");
+	var cateNo = $(this).data("no");	
+	console.log(cateNo);
+	var tBodyNo = $(this).closest("tbody").attr("id");
+	console.log(tBodyNo);
+	var tdPostNum = $(this).parent().siblings("#tdPostNum").val();
 	
+	if(tdPostNum > 0) {
+		alert("포스트정보가 있어 삭제할수없습니다.")
+	}else {		
+	
+	$.ajax({			
+		url : "${pageContext.request.contextPath}/category/delete",		
+		type : "post",
+		/* contentType : "application/json"*/
+		data : {cateNo : cateNo},
+
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			
+		if(jsonResult.result == 'success') {//처리성공			
+			console.log("Ajax 결과성공");
+			$("#"+tBodyNo).remove();			
+			
+			}else {//오류처리
+				var msg = jsonResult.failMsg;
+				alert(msg);				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}				
+	});
+	
+	}
 	
 });
+
+	function render(cateVo) {
+		var src = "";
+		src += '<tbody id="tBody'  + cateVo.cateNo + '" class="cateList">';
+		src += '	<tr>';
+		src += '		<td>' + cateVo.cateNo + '</td>';
+		src += '		<td>' + cateVo.cateName + '</td>';
+		src += '		<td>' + cateVo.postNum + '</td>';
+		src += '		<td>' + cateVo.description + '</td>';
+		src += '		<td class="text-center">';
+		src += '			<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg" data-no="' + cateVo.cateNo + '">';
+		src += '		</td>';
+		src += '	</tr>';
+		src += '</tbody>';
+		$("#admin-cate-list").prepend(src);
+	}
 
 </script>
 </html>
