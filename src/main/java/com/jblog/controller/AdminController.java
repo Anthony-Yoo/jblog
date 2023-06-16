@@ -21,6 +21,7 @@ import com.jblog.service.BlogService;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
 import com.jblog.vo.JsonResult;
+import com.jblog.vo.PostVo;
 import com.jblog.vo.UserVo;
  
 
@@ -127,6 +128,23 @@ public class AdminController {
 		return "/blog/admin/blog-admin-write";	
 	}
 	
-	// @RequestMapping(value="/admin/write",)
+	@RequestMapping(value="/admin/write",method = {RequestMethod.GET,RequestMethod.POST})
+	public String write(@ModelAttribute PostVo postVo,HttpSession session) throws UnsupportedEncodingException {
+		System.out.println("AdminController.write()");
+		System.out.println(postVo);
+		
+		UserVo userVo = (UserVo)session.getAttribute("authUser");
+		BlogVo blogVo = new BlogVo();		
+		blogVo.setId(userVo.getId());
+		System.out.println(blogVo);
+		
+		String urlId = blogVo.getId();
+		String encodeUID = encodedString(urlId);		
+		
+		adminService.write(postVo);	
+		
+		return "redirect:/"+encodeUID+"/admin/writeForm";	
+	}
+	
 	
 }

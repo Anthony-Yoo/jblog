@@ -27,7 +27,7 @@
 		]]>
 	</select>
 	
-	<insert id="insertVo" parameterType="com.jblog.vo.CategoryVo">
+	<insert id="insertcateVo" parameterType="com.jblog.vo.CategoryVo">
 		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">
 			select seq_category_no.nextval from dual		
 		</selectKey>
@@ -63,4 +63,20 @@
 			where cateNo = #{cateNo}
 		]]>	
 	</delete>
+	<insert id="insertpostVo" parameterType="com.jblog.vo.PostVo">		
+		insert into 
+		post  (		postNo,
+					cateNo,
+					postTitle,
+					postContent,
+					regDate	)
+		values (	seq_post_no.nextval,
+					#{cateNo},
+					#{postTitle},
+					#{postContent},
+					sysdate	)	
+	</insert>
+	
+	
+	
 </mapper>

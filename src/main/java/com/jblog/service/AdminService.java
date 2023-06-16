@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jblog.dao.AdminDao;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.PostVo;
 
 @Service
 public class AdminService {
@@ -73,7 +74,7 @@ public class AdminService {
 	public CategoryVo addList(CategoryVo cateVo) {
 		System.out.println("AdminService.addList()");
 		
-		adminDao.insertVo(cateVo);
+		adminDao.insertcateVo(cateVo);
 		int cateNo = cateVo.getCateNo();
 		System.out.println(cateNo);
 		CategoryVo resultCateVo = adminDao.selectCno(cateNo);
@@ -86,5 +87,12 @@ public class AdminService {
 		System.out.println("AdminService.deleteColumn()");
 				
 		return adminDao.deleteVo(cateNo);
+	}
+	
+	public int write(PostVo postVo) {
+		System.out.println("AdminService.write()");
+		
+		
+		return adminDao.insertpostVo(postVo);
 	}
 }

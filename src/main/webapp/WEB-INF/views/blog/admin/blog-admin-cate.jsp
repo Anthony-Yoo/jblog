@@ -148,7 +148,8 @@ $("#admin-cate-list").on("click",".btnCateDel", function(){
 	console.log(cateNo);
 	var tBodyNo = $(this).closest("tbody").attr("id");
 	console.log(tBodyNo);
-	var tdPostNum = $(this).parent().siblings("#tdPostNum").val();
+	var tdPostNum = $(this).parent().siblings("#tdPostNum").text();
+	console.log(tdPostNum);
 	
 	if(tdPostNum > 0) {
 		alert("포스트정보가 있어 삭제할수없습니다.")

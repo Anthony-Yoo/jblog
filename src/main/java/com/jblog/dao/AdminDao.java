@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.PostVo;
 
 @Repository
 public class AdminDao {
@@ -32,10 +33,10 @@ public class AdminDao {
 		return cateList;
 	}
 	
-	public int insertVo(CategoryVo cateVo) {
-		System.out.println("AdminDao.insertVo()");
+	public int insertcateVo(CategoryVo cateVo) {
+		System.out.println("AdminDao.insertcateVo()");
 		System.out.println(cateVo);
-		return session.insert("Admin.insertVo", cateVo);
+		return session.insert("Admin.insertcateVo", cateVo);
 	}
 	
 	public CategoryVo selectCno(int cateNo) {
@@ -50,4 +51,9 @@ public class AdminDao {
 		return session.delete("Admin.deleteVo",cateNo);
 	}
 	
+	public int insertpostVo(PostVo postVo) {
+		System.out.println("Admin.insertpostVo()");
+		
+		return session.insert("Admin.insertpostVo", postVo);		
+	}
 }
