@@ -19,7 +19,7 @@
 					c.id,
 					c.cateName,
 					c.description,
-					c.regDate,
+					to_char(c.regDate, 'yy/mm/dd') as regDate,
 					(select count(*) from post p where c.cateNo = p.cateNo) as postNum
 			from category c
 			where c.id = #{id}
@@ -41,7 +41,7 @@
 					#{id},
 					#{cateName},
 					#{description},
-					sysdate	)	
+					sysdate )	
 	</insert>
 	
 	<select id="selectCno" parameterType="int" resultType="com.jblog.vo.CategoryVo">
@@ -50,33 +50,71 @@
 					c.id,
 					c.cateName,
 					c.description,
-					c.regDate,
+					to_char(c.regDate, 'yy/mm/dd') as regDate,
 					(select count(*) from post p where c.cateNo = p.cateNo) as postNum
 			from category c
 			where c.cateNo = #{cateNo}
 		]]>
 	</select>
 	
-	<delete id="deleteVo" parameterType="int">
+	<delete id="deleteCateVo" parameterType="int">
 		<![CDATA[
 			delete from category
 			where cateNo = #{cateNo}
 		]]>	
 	</delete>
-	<insert id="insertpostVo" parameterType="com.jblog.vo.PostVo">		
-		insert into 
-		post  (		postNo,
+	
+	<insert id="insertPostVo" parameterType="com.jblog.vo.PostVo">
+		<![CDATA[		
+			insert into 
+			post  (		postNo,
+						cateNo,
+						postTitle,
+						postContent,
+						regDate	)
+			values (	seq_post_no.nextval,
+						#{cateNo},
+						#{postTitle},
+						#{postContent},
+						sysdate )	
+		]]>
+	</insert>
+	
+	<select id="selectPostList" resultType="com.jblog.vo.PostVo">
+		<![CDATA[
+			select  postNo,
 					cateNo,
 					postTitle,
 					postContent,
-					regDate	)
-		values (	seq_post_no.nextval,
-					#{cateNo},
-					#{postTitle},
-					#{postContent},
-					sysdate	)	
-	</insert>
+					to_char(regDate, 'yy/mm/dd') as regDate
+			from 	post
+			Order by postNo DESC		
+		]]>	
+	</select>
 	
+	<select id="selectListPost" parameterType="int" resultType="com.jblog.vo.PostVo">
+		<![CDATA[
+			select  postNo,
+					cateNo,
+					postTitle,
+					postContent,
+					to_char(regDate, 'yy/mm/dd') as regDate
+			from 	post
+			where cateNo = #{cateNo}
+			Order by postNo DESC		
+		]]>	
+	</select>
 	
+	<select id="selectPost" parameterType="int" resultType="com.jblog.vo.PostVo">
+		<![CDATA[
+			select  postNo,
+					cateNo,
+					postTitle,
+					postContent,
+					to_char(regDate, 'yy/mm/dd') as regDate
+			from 	post
+			where postNo = #{postNo}		
+		]]>	
+	</select>
 	
 </mapper>

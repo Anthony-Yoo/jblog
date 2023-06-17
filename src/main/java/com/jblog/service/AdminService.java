@@ -65,19 +65,19 @@ public class AdminService {
 		return adminDao.updateBlogImage(blogVo);			
 	}
 
-	public List<CategoryVo> listFromId(String id) {
-		System.out.println("AdminService.listFromId()");
+	public List<CategoryVo> listCateFromId(String id) {
+		System.out.println("AdminService.listCateFromId()");
 						
-		return adminDao.selectId(id);
+		return adminDao.selectCateId(id);
 	}
 	
 	public CategoryVo addList(CategoryVo cateVo) {
 		System.out.println("AdminService.addList()");
 		
-		adminDao.insertcateVo(cateVo);
+		adminDao.insertCateVo(cateVo);
 		int cateNo = cateVo.getCateNo();
 		System.out.println(cateNo);
-		CategoryVo resultCateVo = adminDao.selectCno(cateNo);
+		CategoryVo resultCateVo = adminDao.selectCateNo(cateNo);
 		System.out.println(resultCateVo);
 		
 		return resultCateVo;
@@ -86,13 +86,30 @@ public class AdminService {
 	public int deleteColumn(int cateNo) {
 		System.out.println("AdminService.deleteColumn()");
 				
-		return adminDao.deleteVo(cateNo);
+		return adminDao.deleteCateVo(cateNo);
 	}
 	
 	public int write(PostVo postVo) {
-		System.out.println("AdminService.write()");
+		System.out.println("AdminService.write()");		
 		
+		return adminDao.insertPostVo(postVo);
+	}
+	
+	public List<PostVo> listPost() {
+		System.out.println("AdminService.listPost()");
 		
-		return adminDao.insertpostVo(postVo);
+		return adminDao.selectPostList();
+	}
+	
+	public List<PostVo> selectListPost(int cateNo) {
+		System.out.println("AdminService.selectListPost()");
+		
+		return adminDao.selectListPost(cateNo);
+	}
+	
+	public PostVo selectPost(int postNo) {
+		System.out.println("AdminService.selectPost()");
+		
+		return adminDao.selectPost(postNo);
 	}
 }

@@ -23,8 +23,8 @@ public class AdminDao {
 		return session.update("Admin.updateBlog", blogVo);
 	}
 	
-	public List<CategoryVo> selectId(String id) {
-		System.out.println("AdminDao.selectId()");
+	public List<CategoryVo> selectCateId(String id) {
+		System.out.println("AdminDao.selectCateId()");
 		System.out.println(id);
 		
 		List<CategoryVo> cateList = session.selectList("Admin.selectId", id);
@@ -33,27 +33,45 @@ public class AdminDao {
 		return cateList;
 	}
 	
-	public int insertcateVo(CategoryVo cateVo) {
-		System.out.println("AdminDao.insertcateVo()");
+	public int insertCateVo(CategoryVo cateVo) {
+		System.out.println("AdminDao.insertCateVo()");
 		System.out.println(cateVo);
 		return session.insert("Admin.insertcateVo", cateVo);
 	}
 	
-	public CategoryVo selectCno(int cateNo) {
-		System.out.println("AdminDao.selectCno()");
+	public CategoryVo selectCateNo(int cateNo) {
+		System.out.println("AdminDao.selectCateNo()");
 		
 		return session.selectOne("Admin.selectCno", cateNo);
 	}
 	
-	public int deleteVo(int cateNo) {
-		System.out.println("AdminDao.deleteVo()");
+	public int deleteCateVo(int cateNo) {
+		System.out.println("AdminDao.deleteCateVo()");
 		
-		return session.delete("Admin.deleteVo",cateNo);
+		return session.delete("Admin.deleteCateVo",cateNo);
 	}
 	
-	public int insertpostVo(PostVo postVo) {
-		System.out.println("Admin.insertpostVo()");
+	public int insertPostVo(PostVo postVo) {
+		System.out.println("AdminDao.insertPostVo()");
 		
-		return session.insert("Admin.insertpostVo", postVo);		
+		return session.insert("Admin.insertPostVo", postVo);		
+	}
+	
+	public List<PostVo> selectPostList() {
+		System.out.println("AdminDao.selectPostList()");
+		
+		return session.selectList("Admin.selectPostList");
+	}
+	
+	public List<PostVo> selectListPost(int cateNo) {
+		System.out.println("AdminDao.selectListPost()");		
+		
+		return session.selectList("Admin.selectListPost", cateNo);
+	}
+	
+	public PostVo selectPost(int postNo) {
+		System.out.println("AdminDao.selectPost()");
+		
+		return session.selectOne("Admin.selectPost", postNo);
 	}
 }

@@ -70,7 +70,7 @@ public class AdminController {
 		BlogVo blogVo = blogService.idcheck(id);
 		System.out.println(blogVo);		
 		
-		List<CategoryVo> cateList = adminService.listFromId(id);
+		List<CategoryVo> cateList = adminService.listCateFromId(id);
 		System.out.println(cateList);
 		
 		
@@ -120,7 +120,7 @@ public class AdminController {
 		
 		BlogVo blogVo = blogService.idcheck(id);
 		System.out.println(blogVo);
-		List<CategoryVo> cateList = adminService.listFromId(id);
+		List<CategoryVo> cateList = adminService.listCateFromId(id);
 		
 		model.addAttribute("blogVo", blogVo);
 		model.addAttribute("cateList", cateList);
