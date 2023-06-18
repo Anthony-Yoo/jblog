@@ -64,6 +64,22 @@
 						<div id="post" >${selectPost.postContent}</div>
 					</c:when>
 				</c:choose>	
+				<c:if test="${sessionScope.authUser != null}">
+				<br>
+				<div id="listTitle" class="text-left"><strong>POST의 댓글</strong></div>
+				<hr>
+				<form action="" method="get">
+					<table>						
+						<tr>
+							<td class="text-left"><input type="hidden" id="userNo" value="${sessionScope.authUser.userNo}">${sessionScope.authUser.userName}</td>
+							<td class="text-left"><input id="cmtContent" style="width:700px;"/></td>
+							<td class="text-right"><input type="hidden" id="postNo" value="${selectPost.postNo}">
+			      			<button class="cmtBtn" type="submit" value="">저장</button>
+			      			</td>
+						</tr>											
+					</table>
+				</form>			
+				</c:if>
 								
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
@@ -113,6 +129,59 @@
 	<!-- //wrap -->
 </body>
 <script type="text/javascript">
-$("")
+$(".cmtBtn").on("click",function(){
+	console.log("코멘트 등록버튼 작동");
+	
+	var userNo = $("#userNo").val();
+	var cmtContent = $("#cmtContent").val();
+	var postNo = $("#postNo").val();
+	
+	var CommentsVo = {
+			userNo : userNo,
+			cmtContent : cmtContent,
+			postNo : postNo
+	};
+	console.log(CommentsVo);
+	
+	$.ajax({			
+		url : "${pageContext.request.contextPath}/comments/insert",		
+		type : "post",
+		/*contentType : "application/json"*/
+		data : CommentsVo,
+
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			/*성공시 처리해야될 코드 작성*/
+			
+			if(jsonResult.result=="success") {//처리성공					
+					render(jsonResult.data);
+					console.log("성공");					
+					
+					$("#cmtContent").val("");					
+					
+			}else {//오류처리
+				var msg = jsonResult.failMsg;
+				alter(msg);				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}			
+	});			
+});	
+function render(CommentsVo) {
+	var str = "";	
+	str += '	<table id="t' + CommentsVo.cmtNo + '">';						
+	str += '		<tr>';
+	str += '			<td class="text-left">' + CommentsVo.userName + '</td>';
+	str += '			<td class="text-left">' + CommentsVo.cmtContent + '</td>';
+	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';;
+	str += '  			<td><button class="cmtDelBtn" type="submit" value="' + CommentsVo.cmtNo + '">X</button></td>';
+	str += '		</tr>';											
+	str += '	</table>';	
+	$("#list").prepend(str);	
+}
+	
 </script> 
 </html>

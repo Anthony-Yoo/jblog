@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.CommentsVo;
 import com.jblog.vo.PostVo;
 
 @Repository
@@ -73,5 +74,17 @@ public class AdminDao {
 		System.out.println("AdminDao.selectPost()");
 		
 		return session.selectOne("Admin.selectPost", postNo);
+	}
+	
+	public int insertCmtVo(CommentsVo cmtVo) {
+		System.out.println("AdminDao.insertCmtVo()");
+		System.out.println(cmtVo);
+		return session.insert("Admin.insertCmteVo", cmtVo);
+	}
+	
+	public CommentsVo selectCmtNo(int cmtNo) {
+		System.out.println("AdminDao.selectCmtNo()");
+		
+		return session.selectOne("Admin.selectCmt", cmtNo);
 	}
 }

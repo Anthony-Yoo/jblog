@@ -20,6 +20,7 @@ import com.jblog.service.AdminService;
 import com.jblog.service.BlogService;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.CommentsVo;
 import com.jblog.vo.JsonResult;
 import com.jblog.vo.PostVo;
 import com.jblog.vo.UserVo;
@@ -146,5 +147,17 @@ public class AdminController {
 		return "redirect:/"+encodeUID+"/admin/writeForm";	
 	}
 	
-	
+	@ResponseBody
+	@RequestMapping("/comments/insert")
+	public JsonResult commentsInsert(@ModelAttribute CommentsVo cmtVo) {
+		System.out.println("AdminController.commentsInsert()");		
+		
+		CommentsVo resultCmtVo = adminService.addComments(cmtVo);
+		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(resultCmtVo);
+		System.out.println(jsonResult);
+		
+		return jsonResult;	
+	}
 }

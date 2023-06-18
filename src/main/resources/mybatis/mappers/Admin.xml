@@ -117,4 +117,33 @@
 		]]>	
 	</select>
 	
+	<insert id="insertCmteVo" parameterType="com.jblog.vo.CommentsVo">
+		<selectKey keyProperty="cmtNo" resultType="int" order="BEFORE">
+			select seq_comments_no.nextval from dual		
+		</selectKey>
+		insert into 
+		comments(	cmtNo,
+					postNo,
+					userNo,
+					cmtContent,
+					regDate	)
+		values (	#{cmtNo},
+					#{postNo},
+					#{userNo},
+					#{cmtContent},
+					sysdate )	
+	</insert>
+	
+	<select id="selectCmt" parameterType="int" resultType="com.jblog.vo.CommentsVo">
+		<![CDATA[
+			select  c.cmtNo,
+					c.postNo,
+					c.userNo,
+					c.cmtContent,
+					to_char(c.regDate, 'yy/mm/dd') as regDate,
+					(select userName from users u where c.userNo = u.userNo) as userName
+			from comments c
+			where c.cmtNo = #{cmtNo}
+		]]>
+	</select>
 </mapper>

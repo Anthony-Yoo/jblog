@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.jblog.dao.AdminDao;
 import com.jblog.vo.BlogVo;
 import com.jblog.vo.CategoryVo;
+import com.jblog.vo.CommentsVo;
 import com.jblog.vo.PostVo;
 
 @Service
@@ -111,5 +112,17 @@ public class AdminService {
 		System.out.println("AdminService.selectPost()");
 		
 		return adminDao.selectPost(postNo);
+	}
+	
+	public CommentsVo addComments(CommentsVo cmtVo) {
+		System.out.println("AdminService.addComments()");
+		
+		adminDao.insertCmtVo(cmtVo);
+		int cmtNo = cmtVo.getCmtNo();				
+		System.out.println(cmtNo);
+		CommentsVo resultCmtVo = adminDao.selectCmtNo(cmtNo);
+		System.out.println(resultCmtVo);
+		
+		return resultCmtVo;
 	}
 }

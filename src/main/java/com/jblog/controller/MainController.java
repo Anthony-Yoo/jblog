@@ -85,6 +85,6 @@ public class MainController {
 		model.addAttribute("selectPost", selectPost);
 		
 		return "blog/blog-main";
-	}	
+	}
 	
 }
