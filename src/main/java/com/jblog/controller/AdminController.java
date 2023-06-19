@@ -160,4 +160,33 @@ public class AdminController {
 		
 		return jsonResult;	
 	}
+	
+	@ResponseBody
+	@RequestMapping("/comments/list")
+	public JsonResult commentsList(@RequestParam int postNo) {
+		System.out.println("AdminController.commentsList()");		
+		
+		List<CommentsVo> resultCmtList = adminService.listComments(postNo);
+		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(resultCmtList);
+		System.out.println(jsonResult);
+		
+		return jsonResult;	
+	}
+	
+	@ResponseBody
+	@RequestMapping("/comments/delete")
+	public JsonResult commentsDelete(@RequestParam int cmtNo) {
+		System.out.println("AdminController.commentsDelete()");		
+		
+		int deleteCmt = adminService.deleteComments(cmtNo);
+		
+		JsonResult jsonResult = new JsonResult();
+		jsonResult.success(deleteCmt);
+		System.out.println(jsonResult);
+		
+		return jsonResult;	
+	}
+	
 }

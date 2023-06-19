@@ -56,7 +56,7 @@
 					</c:when>
 					<c:when test="${not empty selectPost}">	
 						<div id="postBox" class="clearfix">
-									<div id="postTitle" class="text-left"><strong>${selectPost.postNo}. ${selectPost.postTitle}</strong></div>
+									<div id="postTitle" class="text-left"><strong>${selectPost.postTitle}</strong></div>
 									<div id="postDate" class="text-left"><strong>${selectPost.regDate}</strong></div>
 									<div id="postNick">${blogVo.userName}(${blogVo.id})님</div>
 						</div>
@@ -68,7 +68,7 @@
 				<br>
 				<div id="listTitle" class="text-left"><strong>POST의 댓글</strong></div>
 				<hr>
-				<form action="" method="get">
+				<form id="cmtForm" action="" method="get">
 					<table>						
 						<tr>
 							<td class="text-left"><input type="hidden" id="userNo" value="${sessionScope.authUser.userNo}">${sessionScope.authUser.userName}</td>
@@ -80,7 +80,9 @@
 					</table>
 				</form>			
 				</c:if>
-								
+				<div id="listParent">
+					<p id="listPatch">
+				</div>				
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
 					<c:choose>
@@ -129,9 +131,44 @@
 	<!-- //wrap -->
 </body>
 <script type="text/javascript">
-$(".cmtBtn").on("click",function(){
-	console.log("코멘트 등록버튼 작동");
+$("document").ready(function(){
+	console.log("DOM실행");
 	
+	var postNo = $("#postNo").val();	
+	console.log(postNo);	
+	
+	$.ajax({			
+		url : "${pageContext.request.contextPath}/comments/list",		
+		type : "post",
+		/*contentType : "application/json"*/
+		data : {postNo : postNo},
+
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			/*성공시 처리해야될 코드 작성*/
+			
+			if(jsonResult.result=="success") {//처리성공					
+					renderEach(jsonResult.data);
+					console.log("성공");					
+					
+					$("#cmtContent").val("");					
+					
+			}else {//오류처리
+				var msg = jsonResult.failMsg;
+				alter(msg);				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}			
+	});			
+});		
+
+$("#cmtForm").on("submit",function(e){
+	e.preventDefault();
+	console.log("코멘트 등록버튼 작동");
+
 	var userNo = $("#userNo").val();
 	var cmtContent = $("#cmtContent").val();
 	var postNo = $("#postNo").val();
@@ -170,18 +207,69 @@ $(".cmtBtn").on("click",function(){
 		}			
 	});			
 });	
+
+$("#listParent").on("click",".cmtDelBtn",function(){
+	console.log("딜리트버튼 작동");
+	
+	var orgCmtNo = $(this).closest('table').attr('id');
+	var cmtNo = orgCmtNo.substring(1,10);
+	console.log(cmtNo);	
+	
+	$.ajax({			
+		url : "${pageContext.request.contextPath}/comments/delete",		
+		type : "post",
+		/*contentType : "application/json"*/
+		data : {cmtNo : cmtNo},
+
+		dataType : "json",
+		success : function(jsonResult){
+			console.log(jsonResult);
+			/*성공시 처리해야될 코드 작성*/
+			
+			if(jsonResult.result=="success") {//처리성공	
+					console.log("성공");					
+					
+					$('#t' + cmtNo).remove();					
+					
+			}else {//오류처리
+				var msg = jsonResult.failMsg;
+				alter(msg);				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}			
+	});			
+});	
+
+
 function render(CommentsVo) {
 	var str = "";	
 	str += '	<table id="t' + CommentsVo.cmtNo + '">';						
 	str += '		<tr>';
-	str += '			<td class="text-left">' + CommentsVo.userName + '</td>';
-	str += '			<td class="text-left">' + CommentsVo.cmtContent + '</td>';
+	str += '			<td class="text-left" style="width:60px;">' + CommentsVo.userName + '</td>';
+	str += '			<td class="text-left" style="width:600px;">' + CommentsVo.cmtContent + '</td>';
 	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';;
 	str += '  			<td><button class="cmtDelBtn" type="submit" value="' + CommentsVo.cmtNo + '">X</button></td>';
 	str += '		</tr>';											
 	str += '	</table>';	
-	$("#list").prepend(str);	
+	$("#listPatch").prepend(str);	
 }
+
+function renderEach(CommentsVo) {
+	$.each(CommentsVo,function(key,value){	
+		var str = "";	
+		str += '	<table id="t' + value.cmtNo + '">';						
+		str += '		<tr>';
+		str += '			<td class="text-left" style="width:60px;">' + value.userName + '</td>';
+		str += '			<td class="text-left" style="width:600px;">' + value.cmtContent + '</td>';
+		str += '			<td class="text-right">' + value.regDate + '</td>';;
+		str += '  			<td><button class="cmtDelBtn" type="submit" value="' + value.cmtNo + '">X</button></td>';
+		str += '		</tr>';											
+		str += '	</table>';	
+		$("#listPatch").append(str);		
+	});
+};
 	
 </script> 
 </html>

@@ -125,4 +125,16 @@ public class AdminService {
 		
 		return resultCmtVo;
 	}
+	
+	public List<CommentsVo> listComments(int postNo) {
+		System.out.println("AdminService.listComments()");
+					
+		return adminDao.selectCmtList(postNo);
+	}
+	
+	public int deleteComments(int cmtNo) {
+		System.out.println("AdminService.deleteComments()");
+					
+		return adminDao.deleteCmt(cmtNo);
+	}
 }
