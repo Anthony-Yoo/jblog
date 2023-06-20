@@ -68,7 +68,7 @@
 				<br>
 				<div id="listTitle" class="text-left"><strong>POST의 댓글</strong></div>
 				<hr>
-				<form action="" method="get">
+				<form action="" id="cmtBtnForm" method="get">
 					<table>						
 						<tr>
 							<td class="text-left"><input type="hidden" id="userNo" value="${sessionScope.authUser.userNo}">${sessionScope.authUser.userName}</td>
@@ -129,7 +129,8 @@
 	<!-- //wrap -->
 </body>
 <script type="text/javascript">
-$(".cmtBtn").on("click",function(){
+$("#cmtBtnForm").on("submit",function(e){
+	e.preventDefault();
 	console.log("코멘트 등록버튼 작동");
 	
 	var userNo = $("#userNo").val();
@@ -176,7 +177,7 @@ function render(CommentsVo) {
 	str += '		<tr>';
 	str += '			<td class="text-left">' + CommentsVo.userName + '</td>';
 	str += '			<td class="text-left">' + CommentsVo.cmtContent + '</td>';
-	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';;
+	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';
 	str += '  			<td><button class="cmtDelBtn" type="submit" value="' + CommentsVo.cmtNo + '">X</button></td>';
 	str += '		</tr>';											
 	str += '	</table>';	
