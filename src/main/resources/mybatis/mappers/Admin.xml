@@ -146,4 +146,26 @@
 			where c.cmtNo = #{cmtNo}
 		]]>
 	</select>
+	
+	<select id="selectCmtList" parameterType="int" resultType="com.jblog.vo.CommentsVo">
+		<![CDATA[
+			select  c.cmtNo,
+					c.postNo,
+					c.userNo,
+					c.cmtContent,
+					to_char(c.regDate, 'yy/mm/dd') as regDate,
+					(select userName from users u where c.userNo = u.userNo) as userName
+			from comments c
+			where c.postNo = #{postNo}
+			order by c.cmtNo DESC
+		]]>
+	</select>
+	
+	<delete id="deleteCmt" parameterType="int">
+		<![CDATA[
+			delete  from comments				
+			where cmtNo = #{cmtNo}			
+		]]>
+	</delete>
+	
 </mapper>

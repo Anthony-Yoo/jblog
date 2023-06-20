@@ -87,4 +87,16 @@ public class AdminDao {
 		
 		return session.selectOne("Admin.selectCmt", cmtNo);
 	}
+	
+	public List<CommentsVo> selectCmtList(int postNo) {
+		System.out.println("AdminDao.selectCmtList()");
+		
+		return session.selectList("Admin.selectCmtList", postNo);
+	}
+	
+	public int deleteCmt(int cmtNo) {
+		System.out.println("AdminDao.deleteCmt()");
+		
+		return session.delete("Admin.deleteCmt", cmtNo);
+	}
 }
