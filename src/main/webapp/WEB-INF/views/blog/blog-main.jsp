@@ -68,11 +68,7 @@
 				<br>
 				<div id="listTitle" class="text-left"><strong>POST의 댓글</strong></div>
 				<hr>
-<<<<<<< HEAD
-				<form action="" id="cmtBtnForm" method="get">
-=======
 				<form id="cmtForm" action="" method="get">
->>>>>>> branch 'master' of https://github.com/Anthony-Yoo/jblog.git
 					<table>						
 						<tr>
 							<td class="text-left"><input type="hidden" id="userNo" value="${sessionScope.authUser.userNo}">${sessionScope.authUser.userName}</td>
@@ -85,7 +81,7 @@
 				</form>			
 				</c:if>
 				<div id="listParent">
-					<p id="listPatch">
+					<p id="listPatch"/>
 				</div>				
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
@@ -135,15 +131,8 @@
 	<!-- //wrap -->
 </body>
 <script type="text/javascript">
-<<<<<<< HEAD
-$("#cmtBtnForm").on("submit",function(e){
-	e.preventDefault();
-	console.log("코멘트 등록버튼 작동");
-=======
 $("document").ready(function(){
-	console.log("DOM실행");
->>>>>>> branch 'master' of https://github.com/Anthony-Yoo/jblog.git
-	
+	console.log("DOM실행");	
 	var postNo = $("#postNo").val();	
 	console.log(postNo);	
 	
@@ -257,15 +246,14 @@ function render(CommentsVo) {
 	var str = "";	
 	str += '	<table id="t' + CommentsVo.cmtNo + '">';						
 	str += '		<tr>';
-<<<<<<< HEAD
 	str += '			<td class="text-left">' + CommentsVo.userName + '</td>';
 	str += '			<td class="text-left">' + CommentsVo.cmtContent + '</td>';
 	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';
-=======
+
 	str += '			<td class="text-left" style="width:60px;">' + CommentsVo.userName + '</td>';
 	str += '			<td class="text-left" style="width:600px;">' + CommentsVo.cmtContent + '</td>';
 	str += '			<td class="text-right">' + CommentsVo.regDate + '</td>';;
->>>>>>> branch 'master' of https://github.com/Anthony-Yoo/jblog.git
+
 	str += '  			<td><button class="cmtDelBtn" type="submit" value="' + CommentsVo.cmtNo + '">X</button></td>';
 	str += '		</tr>';											
 	str += '	</table>';	

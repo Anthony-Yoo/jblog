@@ -1,6 +1,7 @@
 package com.jblog.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,11 +36,16 @@ public class MainController {
 	@RequestMapping("/{id}")
 	public String blogMain(@PathVariable("id") String id,
 						   @RequestParam(value="postNo", required = false, defaultValue = "-1") int postNo,
-						   @RequestParam(value="cateNo", required = false, defaultValue = "-1") int cateNo, Model model) {
-		System.out.println("MainController.blogMain()");		
+						   @RequestParam(value="cateNo", required = false, defaultValue = "-1") int cateNo, 
+						   @RequestParam(value="crtPage",required = false,defaultValue = "1")  int crtPage, Model model) {
+		System.out.println("MainController.blogMain()");
+		
 
 		BlogVo blogVo = blogService.idcheck(id);
 		System.out.println(blogVo);
+		
+		
+		//Map<String, Integer> pMap = adminService.listPage(crtPage);
 		
 		List<CategoryVo> cateList = adminService.listCateFromId(id);
 		int lastCateNo = cateList.get(0).getCateNo();
@@ -49,14 +55,14 @@ public class MainController {
 		PostVo selectPost = null;
 		////////////////////cateNo디폴트여부//////////////////////////////
 		if( cateNo != -1 ) {
-			
-		selectPostList =adminService.selectListPost(cateNo);
-		System.out.println("selectPostList : " + cateNo);		
-		
-		}else {		
-		
-		selectPostList =adminService.selectListPost(lastCateNo);
-		System.out.println("selectPostList : " + selectPostList);
+
+			selectPostList = adminService.selectListPost(cateNo);
+			System.out.println("selectPostList : " + cateNo);
+
+		} else {
+
+			selectPostList = adminService.selectListPost(lastCateNo);
+			System.out.println("selectPostList : " + selectPostList);
 		}
 		
 		/////////////////////////postNo디포트여부//////////////////////////////////
